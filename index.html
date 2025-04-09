@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Link Shortener | Shorten URLs Easily</title>
+    <meta name="description" content="Shorten your long URLs quickly and efficiently with our user-friendly link shortener. Get SEO-friendly short links instantly!">
+    <meta name="keywords" content="link shortener, URL shortener, shorten link, SEO friendly short links">
+    <meta name="author" content="Aashutosh Khatiwada">
+    <meta property="og:title" content="Link Shortener | Shorten URLs Easily">
+    <meta property="og:description" content="Shorten your long URLs quickly and efficiently with our user-friendly link shortener. Get SEO-friendly short links instantly!">
+    <meta property="og:image" content="https://aaaashutosh.github.io/scholarwall/aa.png">
+    <meta property="og:url" content="https://aashutoshkhatiwada.com.np">
+    <meta name="robots" content="index, follow">
+    <style>
+  body {
+            font-family: Arial, sans-serif;
+            background-color: #E3F2FD;
+            text-align: center;
+            padding: 20px;
+        }
+        .container {
+            background: #00BCD4;
+            padding: 20px;
+            border-radius: 10px;
+            display: inline-block;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+        input {
+            width: 80%;
+            padding: 10px;
+            margin: 10px 0;
+            border-radius: 5px;
+            border: none;
+            outline: none;
+        }
+        button {
+            background: #00796B;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        button:hover {
+            background: #004D40;
+        }
+        .shortened-container {
+            margin-top: 20px;
+            background: #0097A7;
+            padding: 10px;
+            border-radius: 5px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 10px;
+        }
+        .shortened-link {
+            color: white;
+            text-decoration: none;
+            font-weight: bold;
+            word-break: break-all;
+        }
+        .copy-btn {
+            background: white;
+            color: #0097A7;
+            border: none;
+            padding: 5px 10px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .copy-btn:hover {
+            background: #eeeeee;
+        }
+        .copy-status {
+            color: #00E676;
+            font-size: 14px;
+            display: none;
+            margin-left: 10px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Link Shortener By</h1>
+    <div class="container">
+        <input type="text" id="longUrl" placeholder="Enter link to shorten">
+        <button onclick="shortenLink()">Shorten</button>
+        <p id="shortenedUrl"></p>
+    </div>
+
+    <div class="footer">
+        <a href="https://aashutoshkhatiwada.com.np" target="_blank">
+            <img style="max-width: 100px; background: #fff; border-radius: 50%;" src="https://aaaashutosh.github.io/scholarwall/aa.png" alt="Aashutosh Khatiwada Logo">
+        </a>
+        <p>&copy; Aashutosh Khatiwada. All rights reserved.</p>
+    </div>
+    <script>
+   function shortenLink() {
+    let longUrl = document.getElementById("longUrl").value;
+    if (longUrl) {
+        let uniqueId = Math.random().toString(36).substr(2, 6);
+        let shortUrl = `shorten.ak/${uniqueId}`;
+        
+        // Store mapping in localStorage (temporary storage for demonstration purposes)
+        localStorage.setItem(shortUrl, longUrl);
+        
+        document.getElementById("shortenedUrl").innerHTML = `
+            <div style="display: flex; align-items: center; gap: 10px;">
+                <a href="#" onclick="redirectTo('${shortUrl}')" id="shortenedLink">${shortUrl}</a>
+                <button onclick="copyLink()" id="copyButton">Copy</button>
+            </div>
+            <span id="copyStatus" style="color: green; display: none;">Copied!</span>
+        `;
+    }
+}
+
+function redirectTo(shortUrl) {
+    let originalUrl = localStorage.getItem(shortUrl);
+    if (originalUrl) {
+        window.open(originalUrl, '_blank');
+    } else {
+        alert("Invalid or expired short link.");
+    }
+}
+
+function copyLink() {
+    let shortenedLink = document.getElementById("shortenedLink").innerText;
+    navigator.clipboard.writeText(shortenedLink).then(() => {
+        document.getElementById("copyStatus").style.display = "inline";
+        setTimeout(() => {
+            document.getElementById("copyStatus").style.display = "none";
+        }, 2000);
+    });
+}
+
+    </script>
+</body>
+</html>
